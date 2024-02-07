@@ -1,0 +1,259 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .table-container {
+    overflow: hidden;
+  }
+</style>
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %} {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+          <ol>
+            <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+            <li>Upload Result/View Result</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+    {% include 'msg.html' %}
+    
+    <div class="container mt-3">
+      <form autocomplete="off" method='POST' enctype="multipart/form-data" action="{% url 'import_result' %}">
+        {% csrf_token %}
+      <div class='row'>
+        <div class='col-lg-3 m-2 col-sm-1 col-md-5'>
+      <input name='import_file' class='form-control' type='file'required>
+      </div>
+      <div class='col-lg-4 m-2 col-sm-6 col-md-5'>
+        <button class='btn btn-success' type='submit' ><i style='font-size:16px;' class="bi bi-upload"></i> Upload</button>
+        </div>
+        <p class='text-danger'>Click to upload Student Result, file must be in xlsx or csv format!</p>
+      </form>
+      
+    </div>
+    {% for m in messages %}
+    {% if m.tags == 'success' %}
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <h2>All Students ({{count}})</h2>
+      <form autocomplete="off" method='get'>
+        <div class="">
+            <div class='row m-2'>
+            <div class='col-lg-8 col-sm-5'>
+        <input name="userid" type="text" placeholder='Search user by UserID' class="form-control" id="userid" required>
+            </div> 
+            <div class='col-4'>
+                <input class='btn m-1 btn-secondary btn-warning' type='submit' value='search'>
+                    </div>
+                </div>
+    </div>
+  </form>
+        </div>
+    <div class="table-responsive">
+      <table class="table table-striped mt-2">
+        <thead >
+          {% if stu %}
+          <tr class="table-warning text-white"> 
+            <th>S/N</th>
+            <th>User ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Profile_ID</th>
+            <th>Action</th>
+            <th>Action</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for i in stu %}
+        <tr class="table-dark text-white">
+            <td>{{forloop.counter}}</td>
+            <td>{{i.userid}}</td>
+            <td>{{i.first_name}}</td>
+            <td>{{i.last_name}}</td>
+            <td>{{i.profile_ID}}</td>
+            <td>
+              <a class=" btn btn-warning" type='button' href="{% url 'viewstudentresult' userid=i.userid %}"><i style='font-size:16px;' class="bi bi-eye-fill"></i> View Result</a>
+          </td>
+          <td>
+            <a class=" btn btn-secondary text-white" type='button' href="{% url 'outstanding' userid=i.userid %}"><i style='font-size:16px;' class="bi bi-bookmark-x"></i> Outstanding</a>
+        </td>
+          <td>
+            <div class="btn-group dropstart">
+              <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                Reset Result <i style='font-size:16px;' class="bi bi-arrow-repeat"></i> 
+              </button>
+              <ul style='width:300px' class="dropdown-menu p-2">
+                <p class='text-info'>Are you sure, Resetting {{i.first_name}} result??</p>
+                <a type="button" href="{% url 'resetstudentresult' userid=i.userid %}" class="btn btn-danger  aria-expanded="false">Yes Sure!</a>
+                </div>
+              </ul>
+            </div>
+        </tr>
+        {% endfor %}
+       
+        </div>
+      </table>
+    </div>
+      <div class="pagination">
+        <span class="step-links">
+          {% if stu.has_previous %}
+          <a class='btn btn-warning' href="?page=1">&laquo; First</a>
+          <a class='btn btn-warning' href="?page={{ stu.previous_page_number }}">Previous</a>
+          {% endif %}
+          <span class="current">
+          Page {{ stu.number }} of {{ stu.paginator.num_pages }}.
+          </span>
+          {% if stu.has_next %}
+          <a class='btn btn-warning' href="?page={{ stu.next_page_number }}">Next</a>
+          <a class='btn btn-warning' href="?page={{ stu.paginator.num_pages }}">Last &raquo;</a>
+          {% endif %}
+        </span>
+      
+    </div>
+      </div>
+  
+    {% else %}
+    <center class='h2 mt-5 text-danger'><i style='font-size:16px;' class="bi bi-eye-slash-fill"></i> No Student Found<br></center>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    {% if messages %}
+    {% for m in messages %}
+    {% if m.tags == 'info' %}
+    <form autocomplete="off" method="post" action="{% url 'verify_result' %}">
+      {% csrf_token %}
+      <table class='table'>
+        <p class='text-info'>{{count}} student result ready to be uploaded in {{new_data}} into database, view below to verify</p>
+        <thead>
+          <tr>
+              {% for header in data.headers %}
+              <th>{{ header }}</th>
+              {% endfor %}
+          </tr>
+      </thead>
+      <tbody>
+          {% for row in data %}
+          <tr>
+              {% for value in row %}
+              <td>{{ value }}</td>
+              {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <input type="submit" class='btn btn-success' name="confirm" value="Confirm">
+      <a type="button" class='btn btn-danger' href='{% url 'adminstudent' %}'>Cancel</a>
+  </form>
+  {% if m.tags == 'error' %}
+  <div class="container mt-3">
+    <form autocomplete="off" method='POST' enctype="multipart/form-data" action="{% url 'import_data' %}">
+      {% csrf_token %}
+    <div class='row'>
+      <div class='col-lg-3 m-2 col-sm-1 col-md-5'>
+    <input name='import_file' class='form-control' type='file'required>
+    </div>
+    <div class='col-lg-4 m-2 col-sm-6 col-md-5'>
+      <button class='btn btn-success' type='submit' ><i style='font-size:16px;' class="bi bi-upload"></i> Upload</button>
+      </div>
+      <p class='text-danger'>Click to upload Student Result, file must be in xlsx or csv format!</p>
+    </form>
+  </div>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+
+  {% else %}
+  <div class="d-flex justify-content-between align-items-center mt-4">
+    <h2>All Students ({{count}})</h2>
+    <form autocomplete="off" method='get'>
+      <div class="">
+          <div class='row m-2'>
+          <div class='col-lg-8 col-sm-5'>
+      <input name="userid" type="text" placeholder='Search user by UserID' class="form-control" id="userid" required>
+          </div> 
+          <div class='col-4'>
+              <input class='btn m-1 btn-secondary btn-warning' type='submit' value='search'>
+                  </div>
+              </div>
+  </div>
+</form>
+      </div>
+      
+    <div class="table-responsive">
+    <table class="table table-striped mt-2">
+      <thead >
+        {% if stu %}
+        <tr class="table-warning text-white">  
+          <th>S/N</th>
+          <th>User ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Profile_ID</th>
+          <th>Action</th>
+          <th>Action</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for i in stu %}
+      <tr class="table-dark text-white">
+        <td>{{forloop.counter}}</td>
+          <td>{{i.userid}}</td>
+          <td>{{i.first_name}}</td>
+          <td>{{i.last_name}}</td>
+          <td>{{i.profile_ID}}</td>
+            <td>
+                <a class=" btn btn-warning " type='button' href="{% url 'viewstudentresult' userid=i.userid %}"><i style='font-size:16px;' class="bi bi-eye-fill"></i> View Result</a>
+            </td>
+            <td>
+              <a class=" btn btn-secondary text-white" type='button' href="{% url 'outstanding' userid=i.userid %}"><i style='font-size:16px;' class="bi bi-bookmark-x"></i> Outstanding</a>
+          </td>
+            <td>
+              <div class="btn-group dropstart">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  Reset Result <i style='font-size:16px;' class="bi bi-arrow-repeat"></i> 
+                </button>
+                <ul style='width:300px' class="dropdown-menu p-2">
+                  <p class='text-info'>Are you sure, Resetting {{i.first_name}} result??</p>
+                  <a type="button" href="{% url 'resetstudentresult' userid=i.userid %}" class="btn btn-danger  aria-expanded="false">Yes Sure!</a>
+                  </div>
+                </ul>
+              </div>
+          </tr>
+      {% endfor %}
+     
+      </div>
+    </table>
+</div>
+    <div class="pagination">
+      <span class="step-links">
+        {% if stu.has_previous %}
+        <a class='btn btn-warning' href="?page=1">&laquo; First</a>
+        <a class='btn btn-warning' href="?page={{ stu.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span class="current">
+        Page {{ stu.number }} of {{ stu.paginator.num_pages }}.
+        </span>
+        {% if stu.has_next %}
+        <a class='btn btn-warning' href="?page={{ stu.next_page_number }}">Next</a>
+        <a class='btn btn-warning' href="?page={{ stu.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </span>
+
+  </div>
+    </div>
+
+  {% else %}
+  <center class='h2 mt-5 text-danger'><i style='font-size:30px;' class="bi bi-eye-slash-fill"></i> No Student Found<br></center>
+  {% endif %}
+{% endif %}
+
+  
+
+<br><br><br>
+
+    {% endblock %}

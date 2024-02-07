@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<style>
+.card .bi {
+  font-size: 50px;
+  font-weight: 600;
+  padding: 0;
+  margin: 20px 0;
+  color: #ffb03b;
+}
+
+
+.card:hover {
+  background: #ffb03b;
+  padding: 30px 30px 70px 30px;
+  box-shadow: 10px 15px 30px rgba(0, 0, 0, 0.18);
+  color:#fff;
+}
+</style>
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+        <div class="container">
+  
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>CHECK RESULT {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+            <ol>
+              <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+              <li>Check Result</li>
+            </ol>
+          </div>
+  
+        </div>
+      </section>
+      {% include 'msg.html' %}
+      <div class='container'>
+        <form autocomplete="off" method='POST'>
+          {% csrf_token %}
+        <div class="form-group mt-4">
+          <label for="semester">Select Semester to view:</label>
+          <select name='semester' class="form-control mt-2" id="semester" required>
+            <option value=''>----Choose Semester----</option>
+            <option value='LEVEL 1 FIRST SEMESTER'>LEVEL 1 FIRST SEMESTER</option>
+            <option value='LEVEL 1 SECOND SEMESTER'>LEVEL 1 SECOND SEMESTER</option>
+            <option value='LEVEL 2 FIRST SEMESTER'>LEVEL 2 FIRST SEMESTER</option>
+            <option value='LEVEL 2 SECOND SEMESTER'>LEVEL 2 SECOND SEMESTER</option>
+            <option value='LEVEL 3 FIRST SEMESTER'>LEVEL 3 FIRST SEMESTER</option>
+            <option value='LEVEL 3 SECOND SEMESTER'>LEVEL 3 SECOND SEMESTER</option>
+            <option value='LEVEL 4 FIRST SEMESTER'>LEVEL 4 FIRST SEMESTER</option>
+            <option value='LEVEL 4 SECOND SEMESTER'>LEVEL 4 SECOND SEMESTER</option>
+            <option value='LEVEL 5 FIRST SEMESTER'>LEVEL 5 FIRST SEMESTER</option>
+            <option value='LEVEL 5 SECOND SEMESTER'>LEVEL 5 SECOND SEMESTER</option>
+            <option value='LEVEL 6 FIRST SEMESTER'>LEVEL 6 FIRST SEMESTER</option>
+            <option value='LEVEL 6 SECOND SEMESTER'>LEVEL 6 SECOND SEMESTER</option>
+            <option value='LEVEL 7 FIRST SEMESTER'>LEVEL 7 FIRST SEMESTER</option>
+            <option value='LEVEL 7 SECOND SEMESTER'>LEVEL 7 SECOND SEMESTER</option>
+            <option value='LEVEL 8 FIRST SEMESTER'>LEVEL 8 FIRST SEMESTER</option>
+            <option value='LEVEL 8 SECOND SEMESTER'>LEVEL 8 SECOND SEMESTER</option>
+          </select>
+        </div>
+        <button type='submit' class='btn btn-warning mt-3 text-secondary'>Submit</button>
+      </form>
+<div class='row'>
+        <div class='col-lg-5 col-sm-12 col-md-12'>
+      <a href="{% url 'outcourse' %}">
+        <div class="card border-0 mt-4 p-4">
+          <div class="card-body" ><center>
+            <h4 class="card-title"><i class="bi bi-question-diamond"></i></h4>
+            <p class="card-text pt-4">Outstanding Course</p>
+          </center>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class='col-lg-5 col-sm-12 col-md-12'>
+    <a href="{% url 'payment' %}">
+      <div class="card border-0 mt-4 p-4">
+        <div class="card-body"><center>
+          <h4 class="card-title"><i class="bi bi-cart-check"></i></h4>
+          <p class="card-text pt-4">MAKE PAYMENT</p>
+        </div>
+      </center>
+      </div>
+    </div>
+  </a>
+</div>
+</div>
+
+      <br><br>
+    </div>
+{% endblock content %}

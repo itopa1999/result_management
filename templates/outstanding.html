@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    <section class="breadcrumbs">
+        <div class="container">
+  
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %}  {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+            <ol>
+              <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+              <li><a href="{% url 'outstand' %}">Outstanding Course</a></li>
+              <li>{{stu.first_name}} Outstanding Course</li>
+            </ol>
+          </div>
+  
+        </div>
+      </section>
+      {% include 'msg.html' %}
+      {% if out %}
+      <div class="container mt-3">
+        <div class='row'>
+          <div class='col-lg-8 col-sm-5'>
+          <h2>{{stu.first_name}} Outstanding Course</h2>
+          </div>
+          <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+            <a class=" btn btn-primary text-white" type='button' href="{% url 'export_oustand' userid=stu.userid %}"><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+          </div>
+        </div>
+        
+        <div class="table-responsive">
+        <table class="table table-striped">
+          <thead >
+            <tr class="table-warning text-white">
+              <th>Course</th>
+              <th>Semester</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+      {% for i in out %}
+      <tr class="table-dark text-white">
+        <td>{{i.course}}</td>
+        <td>{{i.semester}}</td>
+        <td>{{i.status}}</td>
+      </tr>
+      {% endfor %}
+          </div>
+        </table>
+      </div>
+        </div>
+      {% else %}
+      <center class='h2 mt-5 text-danger'><i style='font-size:30px;' class="bi bi-eye-slash-fill"></i> No Outstanding course to clear<br>
+      {% endif %}
+      
+
+
+      {% endblock content %}

@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .table-container {
+    overflow: hidden;
+  }
+</style>
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %} {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+          <ol>
+            <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+            <li><a href="{% url 'adminstudent' %}">Upload Result</a></li>
+            <li>Uploading Result</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+    {% include 'msg.html' %}
+
+    <div class="container mt-3">
+        <form autocomplete="off" method='POST' enctype="multipart/form-data" action="{% url 'import_stu_result' userid=userid %}">
+          {% csrf_token %}
+        <div class='row'>
+          <div class='col-lg-3 m-2 col-sm-1 col-md-5'>
+        <input name='import_file' class='form-control' type='file'required>
+        </div>
+        <div class='col-lg-4 m-2 col-sm-6 col-md-5'>
+          <button class='btn btn-success' type='submit' ><i style='font-size:16px;' class="bi bi-upload"></i> Upload</button>
+          </div>
+          <p class='text-danger'>file must be in xlsx or csv format!</p>
+        </form>
+        
+      </div>
+      {% if messages %}
+    {% for m in messages %}
+    {% if m.tags == 'info' %}
+    <form autocomplete="off" method="post" action="{% url 'verify_result' %}">
+      {% csrf_token %}
+      <table class='table'>
+        <p class='text-info'>{{count}}result ready to be uploaded in {{new_data}} for {{userid}} into database, view below to verify</p>
+        <thead>
+          <tr>
+              {% for header in data.headers %}
+              <th>{{ header }}</th>
+              {% endfor %}
+          </tr>
+      </thead>
+      <tbody>
+          {% for row in data %}
+          <tr>
+              {% for value in row %}
+              <td>{{ value }}</td>
+              {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <input type="submit" class='btn btn-success' name="confirm" value="Confirm">
+      <a type="button" class='btn btn-danger' href='{% url 'adminstudent' %}'>Cancel</a>
+  </form>
+  {% if m.tags == 'error' %}
+  <div class="container mt-3">
+    <form autocomplete="off" method='POST' enctype="multipart/form-data" action="{% url 'import_data' %}">
+      {% csrf_token %}
+    <div class='row'>
+      <div class='col-lg-3 m-2 col-sm-1 col-md-5'>
+    <input name='import_file' class='form-control' type='file'required>
+    </div>
+    <div class='col-lg-4 m-2 col-sm-6 col-md-5'>
+      <button class='btn btn-success' type='submit' ><i style='font-size:16px;' class="bi bi-upload"></i> Upload</button>
+      </div>
+      <p class='text-danger'>file must be in xlsx or csv format!</p>
+    </form>
+  </div>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+{% endif %}
+    {% endblock %}

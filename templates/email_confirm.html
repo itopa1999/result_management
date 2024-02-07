@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<section class="breadcrumbs">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>Reset Password Confirm<span></span></h2>
+      <ol>
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li>Reset Password</li>
+        <li>Email Confirm</li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+{% include 'msg.html' %}
+<section class="section">
+  <div class="form-group d-flex flex-column align-items-center justify-content-center">
+
+    <div class="col-lg-6">
+
+      <!-- Default Card -->
+      <div class="card border-0">
+        <div class="card-body">
+          {% if messages %}
+          {% for m in messages %}
+          {% if m.tags == 'info' %}
+          
+          <h5 class="card-title">Email Confirmation</h5>
+          <p> <center>We’ve emailed you instructions for your  account activation, if an account exists with the email you entered. You should receive them shortly, Click on the link ypu will be redirected.
+             If you don’t receive an email, please make sure
+             you’ve entered the address you registered with, and check your spam folder. !
+            </center></p>
+        
+          {% else %}
+          <h5 class="card-title">Account Deactivated</h5>
+          <p> <center> Your account has been deactivated and you will be logout from all currently login devices
+          </center></p>
+          {% endif %}
+          {% endfor %}
+          {% else %}
+          <h5 class="card-title">Password Reset Link</h5>
+          <p><center> We’ve emailed you instructions for setting your password, 
+            
+            if an account exists with the email you entered. You should receive them shortly, Click on the link ypu will be redirected. If you don’t receive an email, 
+            please make sure you’ve entered the address you registered with, and check your spam folder. !
+          </center></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+</div>
+
+
+
+{% endblock content %}

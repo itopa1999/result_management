@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<section class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        
+        <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %} {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+        <ol>
+          <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+          <li>Template</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+    {% include 'msg.html' %}
+    <div class="container mt-3">
+        <div class=" card bg-secondary text-white">
+            <div class="clearfix">
+            <span class="card-body float-start">Student Template</span>
+            <a href="{% static 'assets/documents/UPLOAD STUDENT TEMPLATE.xlsx' %}"  class='text-white' download>
+                <span class="card-body float-end"> Download <strong><i class='bi bi-download'></i></strong></span>
+            </a>
+        </div>
+          </div>
+          <br>
+          
+          <div class="card bg-primary text-white">
+            <div class="clearfix">
+                <span class="card-body float-start">Result Template</span>
+                <a href="{% static 'assets/documents/UPLOAD RESULT TEMPLATE.xlsx' %}"  class='text-white' download>
+                <span class="card-body float-end"> Download <strong><i class='bi bi-download'></i></strong></span>
+            </a>     
+            </div>
+          </div>
+          <br>
+          <div class="card bg-success text-white">
+            <div class="clearfix">
+                <span class="card-body float-start">Outstanding Template</span>
+                <a href="{% static 'assets/documents/UPLOAD OUTSTANDING TEMPLATE.xlsx' %}"  class='text-white' download>
+                    <span class="card-body float-end"> Download <strong><i class='bi bi-download'></i></strong></span>
+                </a>    
+            </div>
+          </div>
+          <br>
+        </DIV>
+
+    </div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .card .bi {
+    color: #ffb03b;
+  }
+
+</style>
+<section class="breadcrumbs">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center">
+      <h2>Login <span></span></h2>
+      <ol>
+        <li><a href="{% url 'reset_password' %}">Forgot Password</a></li>
+        <li>Login</li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+{% include 'msg.html' %}
+
+<section class="section">
+  <div class="row align-items-top d-flex flex-column align-items-center justify-content-center">
+    <div class="col-lg-5">
+
+      <!-- Default Card -->
+      <div class="card border-0">
+        <div class="card-body">
+          <h5 class="card-title">Login</h5>
+          <form autocomplete="off" method="POST" action="{% url 'login' %}?next={{ request.GET.next }}" >
+            {% csrf_token %}
+            <div class="form-group d-flex flex-column align-items-center justify-content-center">
+              <div class="col-12">
+                <label for="userid" class="form-label">User ID</label>
+                <div class="input-group has-validation">
+                <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-person"></i></span>
+                <input name="userid" type="text" placeholder='Enter UserID' class="form-control" id="userid" required>
+                <div class="invalid-feedback">User ID</div>
+              </div>
+            </div>
+          </div>
+              <div class="col-12">
+                <label for="password" class="form-label mt-2">Password</label>
+                <div class="input-group has-validation">
+                  <span class="input-group-text" id="inputGroupPrepend"><i class="bi bi-key"></i></span>
+                <input name="password" type="password" class="form-control" placeholder='Enter Password' id="password" required>
+                <div class="invalid-feedback">Please enter a valid password!</div>
+              </div>
+            </div>
+            <center><button type="submit" class="btn btn-warning text-secondary mt-3">Submit</button></center>
+          <div class='card-footer mt-3'>
+            <p>Forgot Password? Click <a href='{% url 'reset_password' %}'>Here</a></p>
+          </div>
+          </form>
+        
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+</div>
+
+
+{% endblock content %}

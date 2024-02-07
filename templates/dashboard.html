@@ -1,0 +1,307 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<style>
+textarea{
+  resize:none;
+}
+  .car .bi {
+    font-size: 50px;
+    font-weight: 600;
+    padding: 0;
+    margin: 20px 0;
+    color: #ffb03b;
+  }
+  
+  
+  .car:hover {
+    background: #ffb03b;
+    padding: 30px 30px 70px 30px;
+    box-shadow: 10px 15px 30px rgba(0, 0, 0, 0.18);
+    color:#fff;
+  }
+</style>
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          
+          <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %} {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+          <ol>
+            <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+            <li>Dashboard</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+    {% include 'msg.html' %}
+    <section class="inner-page">
+      <div class="container" style='margin-top:-30px;'>
+        <div class='row d-flex justify-content-between align-items-center'>
+          {% if user.groups.all.0.name == 'admin' %}
+          <div class='col-lg-3 col-sm-6'>
+            <a href='{% url 'adminall' %}'>
+            <div class="card border-0 mt-4 ">
+              <div class="card-body" ><center>
+                <h5 class="card-title">ADMIN</h5>
+                <p class="card-text">{{admincount}}</p>
+              </center>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class='col-lg-3 col-sm-6'>
+          <div class="card border-0 mt-4 ">
+            <div class="card-body" ><center>
+              <h5 class="card-title">TRANSACTION (TD)</h5>
+              <p class="card-text">{{tracount}}</p>
+            </center>
+            </div>
+          </div>
+      </div>
+      <div class='col-lg-3 col-sm-6'>
+        <div class="card border-0 mt-4 ">
+          <div class="card-body" ><center>
+            <h5 class="card-title">OUTSTANDING</h5>
+            <p class="card-text">{{outcount}}</p>
+          </center>
+          </div>
+        </div>
+    </div>
+    <div class='col-lg-3 col-sm-6'>
+      <div class="card border-0 mt-4 ">
+        <div class="card-body" ><center>
+          <h5 class="card-title">STUDENT</h5>
+          <p class="card-text">{{stucount}}</p>
+        </center>
+        </div>
+      </div>
+  </div>
+        {% endif %}
+        </div>
+        <div class='row d-flex justify-content-between align-items-center'>
+          {% if user.groups.all.0.name == 'student' %}
+       <div class='col-lg-6 col-sm-6'>
+        <a href='{% url 'viewresult' %}'>
+        <div class="card car border-0 mt-4 p-4">
+          <div class="card-body" ><center>
+            <h4 class="card-title"><i class="bi bi-card-list"></i></h4>
+            <p class="card-text pt-4">CHECK RESULT</p>
+          </center>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endif %}
+    {% if user.groups.all.0.name == 'admin' %}
+    <div class='col-lg-6 col-sm-6'>
+      <a href='{% url 'student' %}'>
+        <div class="card car border-0 mt-4 p-4">
+          <div class="card-body" ><center>
+            <h4 class="card-title"><i class="bi bi-person"></i></h4>
+            <p class="card-text pt-4">STUDENTS</p>
+          </center>
+          </div>
+        </div>
+      </a>
+      </div>
+      {% endif %}
+      {% if user.groups.all.0.name == 'student' %}
+       <div class='col-lg-6 col-sm-6'>
+        <a href='{% url 'payment' %}'>
+        <div class="card car border-0 mt-4 p-4">
+          <div class="card-body"><center>
+            <h4 class="card-title"><i class="bi bi-cart-check"></i></h4>
+            <p class="card-text pt-4">MAKE PAYMENT</p>
+          </div>
+        </center>
+        </div>
+      </a>
+      </div>
+      {% endif %}
+      {% if user.groups.all.0.name == 'admin' %}
+      <div class='col-lg-6 col-sm-6'>
+    <a href='{% url 'transaction' %}'>
+      <div class="card car border-0 mt-4 p-4">
+        <div class="card-body"><center>
+          <h4 class="card-title"><i class="bi bi-cart-check"></i></h4>
+          <p class="card-text pt-4">PAYMENT HISTORY</p>
+        </div>
+      </center>
+      </div>
+    </a>
+    </div>
+    {% endif %}
+    {% if user.groups.all.0.name == 'admin' %}
+<div class='col-lg-6 col-sm-6'>
+  <a href='{% url 'outstand' %}'>
+  <div class="card car border-0 mt-4 p-4">
+    <div class="card-body" ><center>
+      <h4 class="card-title"><i class="bi bi-bookmark-x"></i></h4>
+      <p class="card-text pt-4">OUTSTANDING</p>
+    </center>
+    </div>
+  </div>
+</a>
+</div>
+{% endif %}
+{% if user.groups.all.0.name == 'admin' %}
+<div class='col-lg-6 col-sm-6'>
+  <a href='{% url 'portalhist' %}'>
+  <div class="card car border-0 mt-4 p-4">
+    <div class="card-body" ><center>
+      <h4 class="card-title"><i class="bi bi-folder"></i></h4>
+      <p class="card-text pt-4">PORTAL HISTORY</p>
+    </center>
+    </div>
+  </div>
+</a>
+</div>
+{% endif %}
+{% if user.groups.all.0.name == 'admin' %}
+<div class='col-lg-6 col-sm-6'>
+  <a data-bs-toggle="modal" data-bs-target="#message" href='#'>
+  <div class="card car border-0 mt-4 p-4">
+    <div class="card-body" ><center>
+      <h4 class="card-title"><i class="bi bi-chat-left-text-fill"></i></h4>
+      <p class="card-text pt-4">MESSAGE</p>
+    </center>
+    </div>
+  </div>
+</a>
+</div>
+</div>
+{% endif %}
+    <div class="container mt-3">
+      <h2><i class="bi bi-award"></i> GRADING SYSTEM</h2>
+      <div class="table-responsive">
+      <table class="table table-striped">
+        <thead >
+          <tr class="table-warning text-white">
+            <th></th>
+            <th>SCORE</th>
+            <th>GRADE</th>
+            <th>POINT</th>caret-right-fill
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>70 and Above</td>
+            <td>A</td>
+            <td>5.0</td>
+          </tr>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>60 to 69</td>
+            <td>B</td>
+            <td>4.0</td>
+          </tr>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>50 to 59</td>
+            <td>C</td>
+            <td>3.0</td>
+          </tr>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>45 to 49</td>
+            <td>D</td>
+            <td>2.0</td>
+          </tr>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>40 to 44</td>
+            <td>E</td>
+            <td>1.0</td>
+          </tr>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>0 to 39</td>
+            <td>F</td>
+            <td>0.0</td>
+          </tr>
+          
+        </tbody>
+      </div>
+      </table>
+    </div>
+
+    <div class="container mt-3">
+      <h2><i class="bi bi-award-fill"></i> B.Sc CERTIFICATE</h2>
+      <div class="table-responsive">
+      <table class="table table-striped">
+        <thead >
+          <tr class="table-warning text-white">
+            <th></th>
+            <th>GPA SCORE</th>
+            <th>CERTIFICATE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>GPA of 4.50 - 5.0</td>
+            <td>First Class</td>
+          </tr>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>GPA of 3.5 – 4.49</td>
+            <td>Second Class Upper </td>
+          </tr>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>GPA of 2.49 – 3.49</td>
+            <td>Second Class Lower</td>
+          </tr>
+          <tr class="table-dark text-white">
+            <th><i class="bi bi-caret-right-fill"></i></th>
+            <td>GPA of 1.50 – 2.48</td>
+            <td>Third class (Pass) </td>
+          </tr>
+        </div>
+      </table>
+    </div>
+      </div>
+    </div>
+    </section>
+
+    <div id="message" style='top:20%;'  class="modal fade">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title"><strong>
+              {% if user.groups.all.0.name == 'student' %}
+              Send Mail to Admin
+              {% endif %}
+              {% if user.groups.all.0.name == 'admin' %}
+              Send Mail to Student
+              {% endif %}
+            </strong></h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form autocomplete="off" method="POST" action="{% url 'message' %}" >
+              {% csrf_token %}
+              <div class=" form-group mt-3 mt-md-0">
+                <input name="user" type="text"  class="form-control" id="name" placeholder="Enter UserID or Email or ProfileID" required>
+              </div><br>
+                <div class=" form-group mt-3 mt-md-0">
+                  <input name="subject" type="text"  class="form-control" id="name" placeholder="Subject" required>
+                </div>
+                
+                <div class=" form-group mt-3">
+                  <textarea name="body" style='height:150px;'   class="form-control" id="email" placeholder="Type your message..........." required ></textarea>
+              </div>
+              
+              <div class="text-left mt-3">
+                <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+                <input type="submit" value='Send' class="btn btn-success">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock %}

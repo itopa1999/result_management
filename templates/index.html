@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>RESULT CHECKER</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/x-icon" href="{% static 'FAV.png' %}">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,600,600i,700,700i|Satisfy|Comic+Neue:300,300i,400,400i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+
+
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+  <script src="https://www.paypal.com/sdk/js?client-id=AZSbk4_8b2umEcy9qAQ5yc3IE3Znj7UH2Hle6ifJDx_M3krweqNmdV3rdfW_0rQfdc9OizbMAr39sG0J&currency=USD&disable-funding=credit,card"></script>
+
+</head>
+
+<body>
+
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top d-flex align-items-center ">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <div class="logo me-auto">
+        {% if user.is_authenticated %}
+        <h1><a href="{% url 'dashboard' %}">RESULT CHECKER</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+      {% else %}
+      <h1><a href="#">RESULT CHECKER</a></h1>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <a href="#"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      </div>
+      {% endif %}
+
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          {% if user.is_authenticated %}
+          {% if user.groups.all.0.name == 'admin' %}
+          <li><a class="nav-link scrollto "  href="{% url 'adminstudent' %}">Student Result</a></li>
+          <li><a class="nav-link scrollto "  href="{% url 'transaction' %}">Payment History</a></li>
+          <li><a class="nav-link scrollto "  " data-bs-toggle="modal" data-bs-target="#addadmin"  href="#">Add Admin</a></li>
+          {% endif %}
+          <li><a class="nav-link scrollto " data-bs-toggle="modal" data-bs-target="#changepassword"  href="#">Change Password</a></li>
+
+          {% endif %}
+          
+        </ul>
+        {% if user.groups.all.0.name == 'student' %}
+        <i data-bs-toggle="modal" data-bs-target="#changepassword" class="bi bi-key mobile-nav"></i>    
+        {% endif %}
+        {% if user.groups.all.0.name == 'admin' %}
+        <i class="bi bi-list mobile-nav-toggle"></i>     
+      {% endif %}
+      </nav><!-- .navbar -->
+      {% if user.is_authenticated %}
+      <a data-bs-toggle="modal" data-bs-target="#logout"  href="#"  class="book-a-table-btn scrollto">Logout</a>
+      {% else %}
+      <a  href="{% url 'login' %}"  class="book-a-table-btn scrollto">Login</a>
+      {% endif %}
+    </div>
+  </header><!-- End Header -->
+  
+  <main id="main">
+{% block content %}
+
+{% endblock content %}
+
+  </main><!-- End #main -->
+  <div id="logout" style='top:30%;' class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"><strong>Logout</strong></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to logout???.              
+            <div class="text-left mt-3">
+              <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+              <a href='{% url 'logout' %}' type="button" class="btn btn-danger">Logout</a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="email" class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"><strong>Change Email.</strong></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form autocomplete="off" method="POST" action="{% url 'changeemail' %}?return_url={{request.path}}" >
+            {% csrf_token %}
+              <div class=" form-group mt-3 mt-md-0">
+                <input name="email" type="email"  class="form-control" id="name" placeholder="New Email" required>
+              </div>
+
+              <div class=" form-group mt-4">
+                <input name="password"  type="password" class="form-control" id="email" placeholder="Password" required>
+            </div>
+            <div class="text-left mt-3">
+              <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+              <input type="submit" value='Submit' class="btn btn-success">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="changepassword"  class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"><strong>Change Password</strong></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form autocomplete="off" method="POST" action="{% url 'changepassword' %}?return_url={{request.path}}" >
+            {% csrf_token %}
+              <div class=" form-group mt-3 mt-md-0">
+                <input name="old_password" type="password"  class="form-control" id="name" placeholder="Old Password" required>
+              </div>
+              <div class=" form-group mt-3">
+                <input name="new_password1"  type="password" class="form-control" id="email" placeholder="New Password" required>
+            </div>
+            <div class="form-group mt-3">
+              <input name="new_password2" type="password" class="form-control"  id="subject" placeholder="Confirm Password" required>
+            </div>
+            <div class="text-left mt-3">
+              <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+              <input type="submit" value='Submit' class="btn btn-success">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="addadmin"  class="modal fade">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title"><strong>Add Admin</strong></h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form autocomplete="off" method="POST" action="{% url 'addadmin' %}?return_url={{request.path}}" >
+            {% csrf_token %}
+              <div class=" form-group mt-3 mt-md-0">
+                <input name="first_name" type="text"  class="form-control" id="name" placeholder="Enter First Name" required>
+              </div>
+              <div class=" form-group mt-3">
+                <input name="last_name"  type="text" class="form-control" id="email" placeholder="Enter Last Name" required>
+            </div>
+            <div class="form-group mt-3">
+              <input name="userid" type="text" class="form-control"  id="subject" placeholder="Enter UserID" required>
+            </div>
+            <div class="form-group mt-3">
+              <input name="email" type="email" class="form-control"  id="subject" placeholder="Enter Email Address" required>
+            </div>
+            
+            <br><br>
+            <div class="form-group mt-3">
+              <label class='text-danger'>Password For Authentication</label>
+              <input name="password" type="password" class="form-control"  id="subject" placeholder="Enter Your Password for Authentication" required>
+            </div>
+            <div class="text-left mt-3">
+              <button data-bs-dismiss="modal" aria-label="Close" class="btn btn-secondary">Cancel</button>
+              <input type="submit" value='Submit' class="btn btn-success">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+     
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+      {% if user.is_authenticated %}
+        <div class="row col-lg-12 col-sm-12">
+          <div class="col-lg-4 col-sm-4  label text-warning ">User ID</div>
+          <div class="col-lg-8 col-sm-4 ">{{user.userid}}</div>
+        </div>
+
+      <div class="row col-lg-12 col-sm-12">
+        <div class="col-lg-4 col-sm-4 label label text-warning">Full Name</div>
+        <div class="col-lg-8 col-sm-4 ">{{user.first_name}} {{user.last_name}}</div>
+      </div>
+      
+      <div class="row col-lg-12 col-sm-12">
+          <div class="col-lg-4 col-sm-4  label label text-warning">Email Address</div>
+          <div class="col-lg-8 col-sm-4 ">{{user.email}} <i data-bs-toggle="modal" data-bs-target="#email" class='bi bi-pencil-square'></i></div>
+        </div>
+
+        <div class="row col-lg-12 col-sm-12">
+          <div class="col-lg-4 col-sm-4  label label text-warning">Profile Code</div>
+          <div class="col-lg-8 col-sm-4 ">{{user.profile_ID}}</div>
+        </div>
+        {% endif %}
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>

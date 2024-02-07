@@ -1,0 +1,46 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+<section class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %} {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+        <ol>
+          <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+          <li><a href="{% url 'viewresult' %}">Check Result</a></li>
+          <li>Result</li>
+        </ol>
+      </div>
+
+    </div>
+  </section>
+  {% include 'msg.html' %}
+  {% if gpaa %}
+  <div class="container mt-3">
+    <h2>{{sem}} Result</h2>
+    <div class="table-responsive">
+    <table class="table table-striped">
+      <thead >
+        <tr class="table-warning text-white">
+          <th>GPA</th>
+          <th>GRADING</th>
+        </tr>
+      </thead>
+      <tbody>
+  <tr class="table-dark text-white">
+    <td>{{gpaa}}</td>
+    <td>{{grade}}</td>
+  </tr>
+      </div>
+    </table>
+  </div>
+    </div>
+  {% else %}
+  <center class='h2 mt-5 text-danger'><i style='font-size:30px;' class="bi bi-eye-slash-fill"></i>{{sem}} Result has not be uploaded<br>
+<a href='{% url 'viewresult' %}' type='button' class='btn mt-3 btn-warning text-secondary'>View Result</a></center>
+  {% endif %}
+
+
+  {% endblock %}

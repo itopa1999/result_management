@@ -1,0 +1,47 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load widget_tweaks %} 
+{% block content %}
+<style>
+  .table-container {
+    overflow: hidden;
+  }
+</style>
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %} {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+          <ol>
+            <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+            <li><a href="{% url 'student' %}">Student</a></li>
+            <li>Update Student</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+    {% include 'msg.html' %}
+    <div class="container mt-3 col-5">
+        <form autocomplete="off" method="POST">
+            {% csrf_token %}
+            <h3><center>Update form autocomplete="off" for {{stu.first_name}}</center></h3>
+            <div class="form-group">
+              <label for="first">First Name:</label>
+              {% render_field form.first_name|attr:'required:true' type="text" id="first" class="form-control" placeholder="Enter First Name" %}
+            </div>
+            <div class="form-group mt-2">
+                <label for="last">Last Name:</label>
+                {% render_field form.last_name|attr:'required:true' type="text" id="last" class="form-control" placeholder="Enter Last Name" %}
+              </div>
+              <div class="form-group mt-2">
+                <label for="email">Email address:</label>
+                {% render_field form.email|attr:'required:true' type="email" id="email" class="form-control" placeholder="Enter Email Address" %}
+              </div>
+              <center>
+            <button type="submit" class="btn btn-success  mt-3">Submit</button>
+              </center>
+          </form>
+    </div>
+    <br><br>
+    {% endblock %}

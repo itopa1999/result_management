@@ -1,0 +1,24 @@
+<div class="container">
+ <!-- Info Alert -->
+ {% if messages %}
+{% for m in messages %}
+{% if m.tags == 'error' %}
+<div class="alert alert-danger shadow h-20 py-2 mt-3">
+  <i class="bi bi-bell-slash" style="font-size:25px"></i><strong>Error!</strong> {{m}}
+</div>
+
+{% endif %}
+{% if m.tags == 'info' %}
+<div class="alert alert-primary shadow h-20 py-2 mt-3">
+  <strong><i class="bi bi-question-circle" style="font-size:25px"></i> Info!</strong> {{m}}
+</div>
+
+{% endif %}
+{% if m.tags == 'success' %}
+<div class="alert alert-success shadow h-20 py-2 mt-3">
+  <strong><i class="bi bi-check-circle" style="font-size:25px"></i> Success!</strong> {{m}}
+</div>
+
+{% endif %}
+{% endfor %}
+{% endif %}

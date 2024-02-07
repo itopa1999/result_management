@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<style>
+  .table-container {
+    overflow: hidden;
+  }
+</style>
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %} {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+          <ol>
+            <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+            <li>Admin</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+    {% include 'msg.html' %}
+    <div class="container mt-3">
+        <div class="table-responsive">
+            <h2>All Admin ({{count}})</h2>
+            <table class="table table-striped mt-2">
+              <thead >
+                {% if stu %}
+                <tr class="table-warning text-white"> 
+                  <th>S/N</th>
+                  <th>User ID</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Email</th>
+                  <th>Profile ID</th>         
+                  <th>Status</th>
+                  <th>Created Date</th>
+                  <th>Updated Date</th>
+                  <th>Action</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in stu %}
+                <tr class="table-dark text-white">
+                  <td>{{forloop.counter}}</td>
+                    <td>{{i.userid}}</td>
+                    
+                    <td>{{i.first_name}}</td>
+                    <td>{{i.last_name}}</td>
+                    <td>{{i.email}}</td>
+                    <td>{{i.profile_ID}}</td>
+                    {% if i.is_active == True %}
+                    <td>Active</td>
+                    {% else %}
+                    <td>Inactive</td>
+                    {% endif %}
+                    <td>{{i.created_at}}</td>
+                    <td>{{i.updated_at}}</td>
+                    <td>
+                      <div class="btn-group dropstart">
+                        <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                          Delete <i style='font-size:16px;' class="bi bi-trash-fill"></i>
+                        </button>
+                        <ul class="dropdown-menu p-2">
+                          <p class='text-secondary'>Are you Sure you want to delete <b class='text-warning'>{{i.userid}}???</span></p>
+                          <a class=" dropdown-item text-danger" href="{% url 'deladmin' i.id %}">Yes, Sure</a>
+              
+                        </ul>
+                      </div>
+                    </td>
+                    </tr>
+                {% endfor %}
+             
+              </div>
+            </table>
+          </div>
+          {% else %}
+          <center class='h2 mt-5 text-danger'><i style='font-size:30px;' class="bi bi-eye-slash-fill"></i> No Admin Account Found Found<br></center>
+          {% endif %}
+     
+    </div>
+    <br><br>
+    {% endblock content %}

@@ -1,0 +1,937 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+<style>
+
+</style>
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>{% if user.is_authenticated %} Hello, {{user.first_name}} {% endif %} {% if user.groups.all.0.name == 'student' %}<span>{{user.profile_ID}}</span>{% endif %}</h2>
+          <ol>
+            <li><a href="{% url 'dashboard' %}"><i style='font-size:16px;' class="bi bi-house-door-fill"></i></a></li>
+            <li><a href="{% url 'adminstudent' %}">View Result</a></li>
+            <li>Result</li>
+          </ol>
+        </div>
+
+      </div>
+    </section>
+    {% include 'msg.html' %}
+
+    <div class="container mt-3">
+       
+              <h5 class="card-title">{{user1.first_name}} Result</h5>
+
+           {% if stu or stu1 or stu2 or stu3 or stu4 or stu5 or stu6 or stu7 or stu8 or stu9 or stu10 or stu11 or stu12 or stu13 or stu14 or stu15  %}
+              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+                {% if stu %}
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100 " id="LEVEL1-first-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL1-first" type="button" role="tab" aria-controls="LEVEL1-first" aria-selected="true">LEVEL 1 first sem</button>
+                  </li>{% endif %}
+                  {% if stu1 %}
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL1-second-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL1-second" type="button" role="tab" aria-controls="LEVEL1-second" aria-selected="false">LEVEL 1 second sem</button>
+                  </li>
+                  {% endif %}
+                {% if stu2 %}
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL2-first-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL2-first" type="button" role="tab" aria-controls="LEVEL2-first" aria-selected="false">LEVEL 2 first sem</button>
+                  </li>
+                {% endif %}
+                {% if stu3 %}
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL2-second-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL2-second" type="button" role="tab" aria-controls="LEVEL2-second" aria-selected="false">LEVEL 2 second sem</button>
+                  </li>
+                {% endif %}
+                {% if stu4 %}
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL3-first-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL3-first" type="button" role="tab" aria-controls="LEVEL3-first" aria-selected="false">LEVEL 3 firse sem</button>
+                  </li>
+                {% endif %}
+                  {% if stu5 %}
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL3-second-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL3-second" type="button" role="tab" aria-controls="LEVEL3-second" aria-selected="false">LEVEL 3 second sem</button>
+                  </li>
+                  {% endif %}
+                  {% if stu6 %}
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL4-first-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL4-first" type="button" role="tab" aria-controls="LEVEL4-first" aria-selected="false">LEVEL 4 first sem</button>
+                  </li>
+                  {% endif %}
+                  {% if stu7 %}
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL4-second-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL4-second" type="button" role="tab" aria-controls="LEVEL4-second" aria-selected="false">LEVEL 4 second sem</button>
+                  </li>
+                  {% endif %}
+                  {% if stu8 %}
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100 " id="LEVEL5-first-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL5-first" type="button" role="tab" aria-controls="LEVEL5-first" aria-selected="true">LEVEL 5 first sem</button>
+                  </li>{% endif %}
+                  {% if stu9 %}
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL5-second-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL5-second" type="button" role="tab" aria-controls="LEVEL5-second" aria-selected="false">LEVEL 5 second sem</button>
+                  </li>
+                  {% endif %}
+                {% if stu10 %}
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL6-first-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL6-first" type="button" role="tab" aria-controls="LEVEL6-first" aria-selected="false">LEVEL 6 first sem</button>
+                  </li>
+                {% endif %}
+                {% if stu11 %}
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL6-second-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL6-second" type="button" role="tab" aria-controls="LEVEL6-second" aria-selected="false">LEVEL 6 second sem</button>
+                  </li>
+                {% endif %}
+                {% if stu12 %}
+                <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL7-first-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL7-first" type="button" role="tab" aria-controls="LEVEL7-first" aria-selected="false">LEVEL 7 firse sem</button>
+                  </li>
+                {% endif %}
+                  {% if stu13 %}
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL7-second-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL7-second" type="button" role="tab" aria-controls="LEVEL7-second" aria-selected="false">LEVEL 7 second sem</button>
+                  </li>
+                  {% endif %}
+                  {% if stu14 %}
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL8-first-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL8-first" type="button" role="tab" aria-controls="LEVEL8-first" aria-selected="false">LEVEL 8 first sem</button>
+                  </li>
+                  {% endif %}
+                  {% if stu15 %}
+                  <li class="nav-item flex-fill" role="presentation">
+                    <button class="nav-link w-100" id="LEVEL8-second-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-LEVEL8-second" type="button" role="tab" aria-controls="LEVEL8-second" aria-selected="false">LEVEL 8 second sem</button>
+                  </li>
+                  {% endif %}
+                  
+              </ul>
+              <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                {% if stu %}
+                <div class="tab-pane fade show " id="bordered-justified-LEVEL1-first" role="tabpanel" aria-labelledby="LEVEL1-first-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 1 first Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result" userid=user1.userid gpa=gpaa  %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa}}</th>
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if stu1 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL1-second" role="tabpanel" aria-labelledby="LEVEL1-second-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 1 second Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result1" userid=user1.userid gpa=gpaa1 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu1 %}
+                          <tr class="table-dark text-white">
+                            <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa1}}</th>
+                         
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if stu2 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL2-first" role="tabpanel" aria-labelledby="LEVEL2-first-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 2 first Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result2" userid=user1.userid gpa=gpaa2 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu2 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa2}}</th>
+                         
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if stu3 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL2-second" role="tabpanel" aria-labelledby="LEVEL2-second-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 2 second Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result3" userid=user1.userid gpa=gpaa3 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu3 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa3}}</th>
+                         
+                          </div>
+                        </table>
+                    </div> 
+                </div>
+                {% endif %}
+                {% if stu4 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL3-first" role="tabpanel" aria-labelledby="LEVEL1-first-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 3 first Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result4" userid=user1.userid gpa=gpaa4 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                            
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu4 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa4}}</th>
+                          
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if stu5 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL3-second" role="tabpanel" aria-labelledby="LEVEL1-second-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 3 second Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result5" userid=user1.userid gpa=gpaa5 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu5 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa5}}</th>
+                          
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                 {% if stu6 %}
+                 <div class="tab-pane fade" id="bordered-justified-LEVEL4-first" role="tabpanel" aria-labelledby="LEVEL2-first-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 4 first Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result6" userid=user1.userid gpa=gpaa6 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu6 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa6}}</th>
+                         
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if stu7 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL4-second" role="tabpanel" aria-labelledby="LEVEL2-second-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 4 second Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result7" userid=user1.userid gpa=gpaa7 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu7 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa7}}</th>
+                         
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %} 
+             
+                {% if stu8 %}
+                <div class="tab-pane fade show " id="bordered-justified-LEVEL5-first" role="tabpanel" aria-labelledby="LEVEL1-first-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 5 first Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result8" userid=user1.userid gpa=gpaa  %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu8 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa8}}</th>
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if stu9 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL5-second" role="tabpanel" aria-labelledby="LEVEL1-second-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 5 second Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result9" userid=user1.userid gpa=gpaa1 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu9 %}
+                          <tr class="table-dark text-white">
+                            <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa9}}</th>
+                         
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if stu10 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL6-first" role="tabpanel" aria-labelledby="LEVEL2-first-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 6 first Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result10" userid=user1.userid gpa=gpaa2 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu10 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa10}}</th>
+                         
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if stu11 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL6-second" role="tabpanel" aria-labelledby="LEVEL2-second-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 6 second Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result11" userid=user1.userid gpa=gpaa3 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu11 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa11}}</th>
+                         
+                          </div>
+                        </table>
+                    </div> 
+                </div>
+                {% endif %}
+                {% if stu12 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL7-first" role="tabpanel" aria-labelledby="LEVEL1-first-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 7 first Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result12" userid=user1.userid gpa=gpaa4 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                            
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu12 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa12}}</th>
+                          
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                {% if stu13 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL7-second" role="tabpanel" aria-labelledby="LEVEL1-second-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 7 second Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result13" userid=user1.userid gpa=gpaa5 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu13 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa13}}</th>
+                          
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+                 {% if stu14 %}
+                 <div class="tab-pane fade" id="bordered-justified-LEVEL8-first" role="tabpanel" aria-labelledby="LEVEL2-first-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 8 first Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result14" userid=user1.userid gpa=gpaa6 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu14 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa14}}</th>
+                         
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if stu15 %}
+                <div class="tab-pane fade" id="bordered-justified-LEVEL8-second" role="tabpanel" aria-labelledby="LEVEL2-second-tab">
+                    <div class="table-responsive">
+                      <div class='row'>
+                        <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                      <h4> {{user1.first_name}} LEVEL 8 second Semester Result </h4>
+                        </div>
+                      <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+                        <a class='btn m-1 btn-primary' href='{% url "export_result15" userid=user1.userid gpa=gpaa7 %}' type='button'><i style='font-size:16px;' class="bi bi-download"></i> Export</a>
+                      </div>
+                    </div>
+                        <table class="table table-striped mt-2">
+                          <thead >
+                           
+                            <tr class="table-warning text-white"> 
+                              <th>S/N</th>
+                              <th>Course (course_code)</th>
+                              <th>Course Unit</th>
+                              <th>Exam Score</th>
+                              <th>Test Score</th>
+                              <th>Attendant Score</th>
+                              <th>Total Score</th>
+                              <th>grade</th>
+                              <th>qp</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          {% for i in stu15 %}
+                          <tr class="table-dark text-white">
+                              <td>{{forloop.counter}}</td>
+                              <td>{{i.course}} {{i.course_code}}</td>
+                              <td>{{i.cu}}</td>
+                              <td>{{i.exam_score}}</td>
+                            <th>{{i.test_score}}</th>
+                            <th>{{i.attendant_score}}</th>
+                            <th>{{ i.exam_score|add:i.test_score|add:i.attendant_score }}</th>
+                            <th>{{i.grade}}</th>
+                            <th>{{i.qp}}</th>
+                           
+                            </tr>
+                          {% endfor %}
+                          <th>GPA = {{gpaa15}}</th>
+                         
+                          </div>
+                        </table>
+                    </div>
+                </div>
+                {% endif %} 
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
+          {% if over > 0 %}
+          <div class="container mt-3">
+            <div class='row'>
+              <div class='col-lg-8 m-2 col-sm-5 col-md-5'>
+                <h3>{{user1.first_name}} GRADING SUMMARY</h3>
+              </div>
+            <div class='col-lg-2 m-2 col-sm-5 col-md-5'>
+            </div>
+          </div>
+            
+            <div class="table-responsive">
+            <table class="table table-striped">
+              <thead >
+                <tr class="table-warning text-white">
+                  <th></th>
+                  <th>CGPA</th>
+                  <th>CERTIFICATE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-dark text-white">
+                  <td>OVERALL</td>
+                  <td>{{over}}</td>
+                  <td>{{cert}}</td>
+                </tr>
+              
+              
+              </tbody>
+            </div>
+            </table>
+          </div>
+          {% endif %} 
+         
+          {% else %}
+          <form autocomplete="off" method='POST' class='mt-1' enctype="multipart/form-data" action="{% url 'import_result' %}">
+            {% csrf_token %}
+          <div class='row'>
+            <div class='col-lg-3 m-2 col-sm-1 col-md-5'>
+          <input name='import_file' class='form-control' type='file'required>
+          </div>
+          <div class='col-lg-4 m-2 col-sm-6 col-md-5'>
+            <button class='btn btn-success' type='submit' ><i style='font-size:16px;' class="bi bi-upload"></i> Upload</button>
+            </div>
+            <p class='text-danger'>file must be in xlsx or csv format!</p>
+          </form>
+          <center class='h2 mt-5 text-danger'><i style='font-size:30px;' class="bi bi-eye-slash-fill"></i> No Result Found for {{user1.first_name}} <br></center>
+          {% endif %}
+          
+    </div>
+    
+        <br><br><br>
+    {% endblock content %}
